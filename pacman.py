@@ -1,32 +1,61 @@
+from board import boards
+import math
 import pygame
 
 pygame.init()
 
 WIDTH = 900
 HEIGHT = 950
-# set the game to have those static dimensions
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
-# set the game's speed
 timer = pygame.time.Clock()
-# max speed
 fps = 60
-font = pygame.Font('freesansbold.ttf', 20)
+font = pygame.font.Font('freesansbold.ttf', 20)  # Corrected font name
+color = 'blue'
+PI = math.pi
+level = boards[0]
+
+flicker = False
+
+def draw_board():
+    num1 = ((HEIGHT - 50) // 32)
+    num2 = (WIDTH // 30)
+    for i in range(len(level)):
+        for j in range(len(level[i])):
+            if level[i][j] == 1:
+                pygame.draw.circle(screen, 'white', (j * num2 + (0.5 * num2), i * num1 + (0.5 * num1)), 4)
+            if level[i][j] == 2 and not flicker:
+                pygame.draw.circle(screen, 'white', (j * num2 + (0.5 * num2), i * num1 + (0.5 * num1)), 10)
+            if level[i][j] == 3:
+                pygame.draw.line(screen, color, (j * num2 + (0.5 * num2), i * num1),
+                                 (j * num2 + (0.5 * num2), i * num1 + num1), 3)
+            if level[i][j] == 4:
+                pygame.draw.line(screen, color, (j * num2, i * num1 + (0.5 * num1)),
+                                 (j * num2 + num2, i * num1 + (0.5 * num1)), 3)
+            if level[i][j] == 5:
+                pygame.draw.arc(screen, color, [(j * num2 - (num2 * 0.4)) - 2, (i * num1 + (0.5 * num1)), num2, num1],
+                                0, PI / 2, 3)
+            if level[i][j] == 6:
+                pygame.draw.arc(screen, color,
+                                [(j * num2 + (num2 * 0.5)), (i * num1 + (0.5 * num1)), num2, num1], PI / 2, PI, 3)
+            if level[i][j] == 7:
+                pygame.draw.arc(screen, color, [(j * num2 + (num2 * 0.5)), (i * num1 - (0.4 * num1)), num2, num1], PI,
+                                3 * PI / 2, 3)
+            if level[i][j] == 8:
+                pygame.draw.arc(screen, color,
+                                [(j * num2 - (num2 * 0.4)) - 2, (i * num1 - (0.4 * num1)), num2, num1], 3 * PI / 2,
+                                2 * PI, 3)
+            if level[i][j] == 9:
+                pygame.draw.line(screen, 'white', (j * num2, i * num1 + (0.5 * num1)),
+                                 (j * num2 + num2, i * num1 + (0.5 * num1)), 3)
 
 run = True
 while run:
-    # control the frame rate
     timer.tick(fps)
-    # fill the background color
     screen.fill('black')
+    draw_board()
 
-    # avoid infinite while loop
-    # event.get() gets anything pygame can process
     for event in pygame.event.get():
-        # pygame.QUIT is a red cross to leave the game
         if event.type == pygame.QUIT:
             run = False
 
-    # draw on the screen every iteration
-    pygame.display.flip()
-# deinitialize all Pygame modules
 pygame.quit()
