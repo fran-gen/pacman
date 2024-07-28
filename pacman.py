@@ -13,8 +13,8 @@ font = pygame.font.Font('freesansbold.ttf', 20)  # Corrected font name
 color = 'blue'
 PI = math.pi
 level = boards[0]
-
 flicker = False
+
 
 def draw_board():
     num1 = ((HEIGHT - 50) // 32)
