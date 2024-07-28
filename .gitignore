@@ -1,5 +1,2 @@
-<<<<<<< HEAD
-=======
-# Ignore .idea directory
->>>>>>> c4452f3 (added a gitignore.)
-.idea/
+.idea
+
