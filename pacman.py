@@ -30,4 +30,3 @@ while run:
     pygame.display.flip()
 # deinitialize all Pygame modules
 pygame.quit()
-
